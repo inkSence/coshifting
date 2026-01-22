@@ -25,7 +25,13 @@
   {
     "id": 4,
     "balanceInMinutes": 0,
-    "balanceTimestamp": "2025-07-15T18:25:06.383944996",
+    "balanceTimestamp": "2025-08-25T13:45:16.026591226",
+    "transactions": []
+  },
+  {
+    "id": 5,
+    "balanceInMinutes": 0,
+    "balanceTimestamp": "2025-08-25T13:48:53.92947145",
     "transactions": []
   }
 ]

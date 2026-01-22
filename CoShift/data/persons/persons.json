@@ -1,30 +1,44 @@
 [
   {
-    "id": 1,
-    "nickname": "anton",
-    "password": "$2b$12$KVcFEupQDxK0zzrBIUnWVuX2IOq3aI8mJVUmlgl50qk5DNWvJo9uu",
-    "timeAccountId": 1,
-    "role": "ADMIN"
-  },
-  {
     "id": 2,
     "nickname": "berta",
-    "password": "$2b$12$J6CJaYbG8IfjH.goJUaOvO3d8Nt9doaUUjMiV3fPApWDy/1ZQKt66",
+    "password": "$2a$10$fdpg9N/DQaiSrf29beG7g.CDBcjCTDS0ev1/g.1MhcbsMxDxR/Wwm",
     "timeAccountId": 2,
     "role": "USER"
   },
   {
+    "id": 4,
+    "nickname": "philipp",
+    "password": "$2a$10$gnpAbDJO3f6q1NrPSooy6e.8RKst1.gyLeXxSbwq/GEQDi5cxRQfe",
+    "timeAccountId": 4,
+    "role": "ADMIN"
+  },
+  {
     "id": 3,
     "nickname": "cäsar",
-    "password": "$2b$12$/IpDuVJ7GFfzkoacpqvLx.yt/yb77Exwd/1NGqzSRKlSvovqfYetm",
+    "password": "$2a$10$R9KCyZspWr8ODzy9cdOZ.OEgSxNOqLNss51Fhic6YiQ/vVn1fAIZ.",
     "timeAccountId": 3,
     "role": "ADMIN"
   },
   {
-    "id": 4,
-    "nickname": "philipp",
-    "password": "$2b$12$/LmXw2zkLqZ2bKplgADlAuesWHqVlkYp6K9nAeNFcEUwfXTQCNtIO",
-    "timeAccountId": 4,
+    "id": 1,
+    "nickname": "anton",
+    "password": "$2a$10$r4SAp97HMRGniPkJeICz7OgTIe9Tcy84GmpzmuPKsfV1acrdhNn3.",
+    "timeAccountId": 1,
     "role": "ADMIN"
+  },
+  {
+    "id": 5,
+    "nickname": "david",
+    "password": "$2a$10$8dLYXpcr8VywNk4rfZ.nzeJPHN4E3B4em/1SwOCDmJBqvOHheVS0q",
+    "timeAccountId": 4,
+    "role": "USER"
+  },
+  {
+    "id": 6,
+    "nickname": "demo",
+    "password": "$2a$10$FnLW6szZHp5ant8uEBVe1eqrbiNyf8UNfMg5s5oyCQouo/bAu/KTW",
+    "timeAccountId": 5,
+    "role": "USER"
   }
 ]
