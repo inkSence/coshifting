@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: coshifting
+      POSTGRES_USER: coshift
+      POSTGRES_PASSWORD: coshift
+    ports:
+      - "5433:5432"
+    volumes:
+      - demo_pgdata:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/coshifting
+      SPRING_DATASOURCE_USERNAME: coshift
+      SPRING_DATASOURCE_PASSWORD: coshift
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./CoShift/data:/app/data
+    depends_on:
+      - db
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+      args:
+        VITE_API_URL: http://backend:8080
+    ports:
+      - "8081:80"
+    depends_on:
+      - backend
+
+volumes:
+  demo_pgdata:

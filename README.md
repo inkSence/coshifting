@@ -86,6 +86,20 @@ Prerequisites
    npm run dev                  # http://localhost:5173
    ```
 
+### Demo via Docker Compose (ohne lokale Daten)
+
+Für eine **saubere Demo-DB** mit Seed-Daten nutze die separate Compose-Datei.
+Sie verwendet eine eigene Docker-Volume (`demo_pgdata`) und Port `5433`,
+damit deine lokalen Daten unangetastet bleiben.
+
+```bash
+docker compose -f docker-compose.demo.yml up --build
+```
+
+Demo-Login (passwort: `secret`):
+- `admin` (ADMIN)
+- `demo` (USER)
+
 ## Data Persistence
 
 Person data is persisted in PostgreSQL via JPA. Shifts and time accounts are
