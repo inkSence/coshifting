@@ -5,37 +5,18 @@ Its goal is to help a **co-operative supermarket with ~500 members** to plan
 and book the mandatory **work shifts** every member performs each
 month.  Reduced staffing costs translate directly into lower product prices.
 
-The long-term vision is:
-
-* Web application (✔ in progress)  
-* Optional mobile app (planned)  
-
-
----
-
-## Current Walking Skeleton
-
-The minimal slice already works end-to-end:
-
-1. A member logs in with HTTP Basic Auth.  
-2. After successful authentication the web client shows  
-   * the current week (7 days)  
-   * shifts per day  
-   * a sign if the shift is fully staffed.  
-3. All data is stored in **JSON files** – project can evolve quickly to a relational database.
-
 ---
 
 ## Tech Stack
 
 Backend  
-• Java 17 • Spring Boot 3.5 • Spring Security • Maven • JUnit 5 • Gson/Jackson
+• Java 21 • Spring Boot 3.5 • Spring Security • Maven • JUnit 5 • PostgreSQL
 
 Frontend  
 • React 19 • TypeScript 5 • Vite • ESLint
 
 Tooling  
-• Git • Docker (planned)
+• Git • Docker 
 
 ---
 
@@ -45,38 +26,39 @@ CoShift follows **Clean / Hexagonal Architecture** with four source packages:
 
 ```text
 org.coshift
-├─ domain // business objects (Shift, Person, …)
-├─ application // use-cases
-├─ adapters // web, persistence, mapping, …
-└─ frameworks // Spring wiring, Gson file access
+├─ a_domain // business objects (Shift, Person, …)
+├─ b_application // use-cases, ports
+├─ c_adapters // web, persistence, mapping, …
+└─ d_frameworks // Spring wiring, JPA entities, Gson file access
 ```
 Key points  
 * Domain and application core are **framework-agnostic**.  
-* Controllers convert HTTP requests to use-case calls, DTOs map domain
-  objects to JSON payloads.
+
 
 ---
 
-## Project Structure
-```text
-CoShift/
-├── src/
-│ ├── main/java/
-│ │ └── org/coshift/… # (see above)
-│ ├── main/resources/
-│ │ └── application.yml # Spring Boot config
-│ └── test/java/ 
-└── frontend/ # React client (Vite)
-```
+## API Overview 
 
----
-
-## API Overview (so far)
-
-| Method | Path        | Description                              | Auth |
-|--------|-------------|------------------------------------------|------|
-| GET    | `/api/shifts` | Returns all shifts as JSON           | ✔ |
-| GET    | `/api/week`  | Returns a `DayCellViewModel` for UI  | ✔ |
+| Method | Path | Description | Auth | Role |
+|--------|------|-------------|------|------|
+| GET | `/api/shifts` | Returns all shifts as JSON | ✔ | USER |
+| GET | `/api/shifts/day?date=YYYY-MM-DD` | Returns public shift details for a day | ✔ | USER |
+| POST | `/api/shifts` | Create a shift (`startTime`, `durationInMinutes`, `capacity`) | ✔ | ADMIN |
+| PUT | `/api/shifts/{id}` | Update a shift | ✔ | ADMIN |
+| DELETE | `/api/shifts/{id}` | Delete a shift | ✔ | ADMIN |
+| PUT | `/api/shifts/{id}/participation` | Add person to shift (body: `personId`) | ✔ | USER |
+| DELETE | `/api/shifts/{id}/participation` | Remove person from shift (body: `personId`) | ✔ | USER |
+| GET | `/api/week` | Returns current week as `DayCellViewModel` list | ✔ | USER |
+| GET | `/api/week?count=3` | Returns multiple weeks (default 3) | ✔ | USER |
+| POST | `/api/persons` | Create a person (body: `nickname`, `password`, `role?`) | ✔ | USER |
+| GET | `/api/persons` | List all persons | ✔ | USER |
+| GET | `/api/persons/{id}` | Get person by id | ✔ | USER |
+| GET | `/api/persons/{id}/timeaccount` | Get time account for person | ✔ | USER |
+| GET | `/api/persons/me` | Get current authenticated person | ✔ | USER |
+| GET | `/api/persons/me/timeaccount` | Get current person's time account | ✔ | USER |
+| PUT | `/api/persons/{id}/role` | Update person role | ✔ | USER |
+| PUT | `/api/persons/{id}` | Update person | ✔ | ADMIN |
+| DELETE | `/api/persons/{id}` | Delete person | ✔ | ADMIN |
 
 
 ---
@@ -84,9 +66,10 @@ CoShift/
 ## Build & Run 
 
 Prerequisites  
-* Java 17+  
+* Java 21+  
 * Maven 3.9+  
 * Node 20+ (for the React client)
+* PostgreSQL 16+ (DB: `coshifting`, user/password: `coshift`)
 
 1. **Start the backend**
 
@@ -103,26 +86,10 @@ Prerequisites
    npm run dev                  # http://localhost:5173
    ```
 
-3. **Login**
-
-   For a quick demo add a member directly in `persons.json` or via a unit
-   test that calls `UseCaseInteractor.addPerson(nickname, password)`.
-
----
-
-## Tests
-
-
-
-CoShift is developed **test-first**.  Every new bug requires a failing
-regression test before it is fixed.
-
----
-
 ## Data Persistence
 
-JSON first – Domain objects are mapped to lightweight DTOs and written to the
-  `data/` directory via `Gson`.  
+Person data is persisted in PostgreSQL via JPA. Shifts and time accounts are
+still stored as JSON in the `data/` directory via `Gson`.
 
 
 ---
@@ -140,15 +107,6 @@ JSON first – Domain objects are mapped to lightweight DTOs and written to the
 
 ---
 
-## Contributing
-
-This project is a learning playground.  
-Feedback, pull requests and architecture discussions are welcome!
-
-* Fork → Create feature branch → Write failing test → Code → PR  
-* Use conventional commits; every change must be covered by tests.  
-
----
 
 ## License
 
