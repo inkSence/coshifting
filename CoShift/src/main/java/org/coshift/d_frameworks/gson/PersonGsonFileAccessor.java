@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import org.coshift.c_adapters.dto.PersonDetailsDto;
 import org.coshift.c_adapters.ports.PersonJsonFileAccessor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import java.util.List;
  * Keine Geschäftslogik – diese steckt im Adapter/Use-Case.
  */
 @Repository
+@Profile("json")
 public class PersonGsonFileAccessor implements PersonJsonFileAccessor {
 
 

@@ -5,6 +5,7 @@ import org.coshift.b_application.ports.PersonRepository;
 import org.coshift.c_adapters.dto.PersonDetailsDto;
 import org.coshift.c_adapters.mapper.PersonMapper;
 import org.coshift.c_adapters.ports.PersonJsonFileAccessor;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
  *  – Enthält Such- sowie ID-Vergabe-Logik, bleibt aber JSON-Bibliotheksfrei.
  */
 @Component
+@Profile("json")
 public class PersonJsonRepository implements PersonRepository {
 
     private final PersonJsonFileAccessor fileAccessor;

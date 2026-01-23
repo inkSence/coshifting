@@ -1,15 +1,20 @@
-# src/main/resources/b_application.yml
 spring:
   application:
     name: CoShift
-  # datasource:
-  #   url: jdbc:sqlserver://localhost:1433;databaseName=coshift;encrypt=true;trustServerCertificate=true
-  #   username: coshift_user
-  #   password: myPassword
-  #   driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  datasource:
+    url: jdbc:postgresql://localhost:5432/coshifting
+    username: coshift
+    password: coshift
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
+    open-in-view: false
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.SQLServerDialect
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+
+logging:
+  level:
+    org.hibernate.SQL: debug
