@@ -68,7 +68,7 @@ Key points
 Prerequisites  
 * Java 21+  
 * Maven 3.9+  
-* Node 20+ (for the React client)
+* Node 22.23.4 (for the React client; see `CoShift/frontend/.nvmrc`)
 * PostgreSQL 16+ (DB: `coshifting`, user/password: `coshift`)
 
 1. **Start the backend**
@@ -82,7 +82,8 @@ Prerequisites
 
    ```bash
    cd CoShift/frontend
-   npm install
+   nvm use                      # if using NVM; run nvm install once if needed
+   npm ci
    npm run dev                  # http://localhost:5173
    ```
 
