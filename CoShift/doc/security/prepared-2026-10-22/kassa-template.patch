@@ -1,0 +1,14 @@
+--- a/C_adapters/web_controller.py
++++ b/C_adapters/web_controller.py
+@@ -70,8 +70,9 @@
+     # Nur anzeigen, wenn ?debug=1 in der URL steht
+     show_config = request.query_params.get("debug") == "1"
+     return templates.TemplateResponse(
+-        "index.html", 
+-        {"request": request, "config": config, "show_config": show_config}
++        request=request,
++        name="index.html",
++        context={"config": config, "show_config": show_config}
+     )
+ 
+ @app.post("/api/process")

@@ -1,0 +1,133 @@
+{
+  "verified_at_utc": "2026-10-22T16:18:31.075346+00:00",
+  "backup_directory": "/home/deploy/coshift-security-deploy-20261022T161152Z",
+  "coshift": {
+    "status": "deployed",
+    "completed_at_utc": "2026-10-22T16:16:30.487897+00:00",
+    "images": {
+      "backend": "sha256:c8cd7b276874e96499daa5c58a7cb7ec017c7e0c7a54307be3235cf5e4343433",
+      "frontend": "sha256:1ee0cb2543e3b9d364085f986bd76b5cfb8913a0ffb0945930caf4e754f0cee0"
+    },
+    "tags": {
+      "backend": "coshift-backend:security-20261022",
+      "frontend": "coshift-frontend:security-20261022"
+    },
+    "checks": {
+      "backend_local": {
+        "status": 401,
+        "sha256": "8bd2bfa8f270afe93f39bfe495b331239e576479eab8877c7803118d2d97c392",
+        "headers": {
+          "x-content-type-options": "nosniff",
+          "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+          "x-frame-options": "DENY"
+        }
+      },
+      "frontend_home": {
+        "status": 200,
+        "sha256": "e93157ec558740bb65e835d99fe6611e7f80fbb944706565c40e911ff5afaccc",
+        "headers": {}
+      },
+      "public_api": {
+        "status": 401,
+        "sha256": "7f3f7c6cb8ac9a118e2e32bb95bebac44dc4a3b07559b9b5a79f6685ab744f74",
+        "headers": {
+          "x-content-type-options": "nosniff",
+          "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+          "x-frame-options": "DENY"
+        }
+      },
+      "/day/2026-10-22": {
+        "status": 200,
+        "sha256": "e93157ec558740bb65e835d99fe6611e7f80fbb944706565c40e911ff5afaccc",
+        "headers": {}
+      },
+      "/admin": {
+        "status": 200,
+        "sha256": "e93157ec558740bb65e835d99fe6611e7f80fbb944706565c40e911ff5afaccc",
+        "headers": {}
+      },
+      "/configure-shifts": {
+        "status": 200,
+        "sha256": "e93157ec558740bb65e835d99fe6611e7f80fbb944706565c40e911ff5afaccc",
+        "headers": {}
+      }
+    },
+    "removed_root_absent": {
+      "backend-os": true,
+      "frontend-os": true,
+      "backend-java": true
+    },
+    "data_unchanged_at_check": true
+  },
+  "kassa": {
+    "completed_at_utc": "2026-10-22T16:14:16.217524+00:00",
+    "before_pid": 70480,
+    "after_pid": 96628,
+    "venv": "/opt/kassa/.venvs/security-20261022T161152Z",
+    "rollback_venv": "/opt/kassa/.venvs/pre-security-20261022T161152Z",
+    "versions": {
+      "fastapi": "0.159.1",
+      "starlette": "1.9.0",
+      "python-multipart": "0.0.32",
+      "anyio": "4.15.1",
+      "pip": "26.2.2"
+    },
+    "checks": {
+      "local_index": 200,
+      "public_index": 200,
+      "/api/process invalid_extension": 400,
+      "/upload invalid_extension": 400,
+      "public_field_limit": 400
+    },
+    "status": "deployed",
+    "active_state": "active"
+  },
+  "kernel": "6.8.0-147-generic",
+  "containers": {
+    "coshift_backend": {
+      "id": "e01bff5e4b7a5c3571c93af9b4715104e52276f13018bf893270e36809ccdc96",
+      "image": "sha256:c8cd7b276874e96499daa5c58a7cb7ec017c7e0c7a54307be3235cf5e4343433",
+      "started_at": "2026-10-22T16:16:18.179202349Z",
+      "restart_count": 0,
+      "port_bindings": {
+        "8080/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "8080"
+          }
+        ]
+      }
+    },
+    "coshift_frontend": {
+      "id": "8564029ec96e02343982adc743bf024aef94d7005d0b39b283c4604c09aeed09",
+      "image": "sha256:1ee0cb2543e3b9d364085f986bd76b5cfb8913a0ffb0945930caf4e754f0cee0",
+      "started_at": "2026-10-22T16:16:27.743438159Z",
+      "restart_count": 0,
+      "port_bindings": {
+        "80/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "8081"
+          }
+        ]
+      }
+    }
+  },
+  "java": "openjdk version \"21.0.13\" 2026-10-20 LTS\nOpenJDK Runtime Environment Temurin-21.0.13+9 (build 21.0.13+9-LTS)\nOpenJDK 64-Bit Server VM Temurin-21.0.13+9 (build 21.0.13+9-LTS, mixed mode, sharing)",
+  "runtime_libraries": [
+    "jackson-databind-3.1.7.jar",
+    "jackson-core-3.1.7.jar",
+    "tomcat-embed-core-11.0.27.jar",
+    "jackson-databind-2.21.7.jar",
+    "jackson-core-2.21.7.jar",
+    "spring-boot-4.1.2.jar",
+    "spring-core-7.0.10.jar",
+    "spring-security-core-7.1.2.jar"
+  ],
+  "public_checks": {
+    "https://coshift.philipplack.de/": 200,
+    "https://kassa.philipplack.de/": 200,
+    "https://me.philipplack.de/": 200
+  },
+  "test_containers_remaining": []
+}

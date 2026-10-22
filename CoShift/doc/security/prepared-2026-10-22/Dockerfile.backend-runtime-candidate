@@ -1,0 +1,7 @@
+FROM eclipse-temurin:21-jre-alpine@sha256:b48e02e0ea88d7bfb305335df94923bdef394905f4147dccd52e873cf17b1088
+COPY OpenJDK21U-jre_x64_alpine-linux_hotspot_21.0.13_9.tar.gz /tmp/jre.tar.gz
+RUN echo '9138eab0f7d230e17163953f015ec9ae2431dbc49069c658b7f991e45b54fb9b  /tmp/jre.tar.gz' | sha256sum -c -
+RUN rm -rf /opt/java/openjdk && mkdir -p /opt/java/openjdk && tar xzf /tmp/jre.tar.gz -C /opt/java/openjdk --strip-components=1 && rm /tmp/jre.tar.gz
+WORKDIR /app
+COPY app.jar /app/app.jar
+ENTRYPOINT ["java","-jar","/app/app.jar"]

@@ -1,0 +1,191 @@
+{
+  "checked_at_utc": "2026-10-22T15:41:33.437962+00:00",
+  "scanner": "Trivy 0.76.1",
+  "database_updated_at": "2026-10-22T13:15:26Z",
+  "candidates": {
+    "coshift-frontend:cve-20261022-candidate": "sha256:1ee0cb2543e3b9d364085f986bd76b5cfb8913a0ffb0945930caf4e754f0cee0",
+    "coshift-backend:cve-20261022-runtime-candidate": "sha256:a8853739a9d9eda99974feb14ec73761151d0e4dbf65ea0b2fdaeeeffb46d5ff",
+    "coshift-backend:cve-20261022-complete-candidate": "sha256:c8cd7b276874e96499daa5c58a7cb7ec017c7e0c7a54307be3235cf5e4343433"
+  },
+  "kassa_test_cases": {
+    "versions": {
+      "fastapi": "0.159.1",
+      "starlette": "1.9.0",
+      "python-multipart": "0.0.32",
+      "anyio": "4.15.1"
+    },
+    "tests": {
+      "/api/process urlencoded": {
+        "status": 422,
+        "security_headers": 3,
+        "parser_called": true
+      },
+      "/upload urlencoded": {
+        "status": 422,
+        "security_headers": 3,
+        "parser_called": true
+      },
+      "urlencoded 1001 fields": {
+        "status": 400,
+        "security_headers": 3
+      },
+      "urlencoded field over 1MiB": {
+        "status": 400,
+        "security_headers": 3
+      },
+      "/api/process valid upload": {
+        "status": 200,
+        "security_headers": 3
+      },
+      "/api/process invalid extension": {
+        "status": 400,
+        "security_headers": 3
+      },
+      "/upload valid upload": {
+        "status": 200,
+        "security_headers": 3
+      },
+      "/upload invalid extension": {
+        "status": 400,
+        "security_headers": 3
+      },
+      "multipart 102 headers": {
+        "status": 400,
+        "security_headers": 3
+      },
+      "index template": {
+        "status": 200,
+        "security_headers": 3
+      }
+    },
+    "assertions": "10 cases passed"
+  },
+  "http_integration": {
+    "anonymous": {
+      "status": 401,
+      "headers": {
+        "x-content-type-options": "nosniff",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "x-frame-options": "DENY"
+      }
+    },
+    "authenticated": {
+      "status": 200,
+      "headers": {
+        "x-content-type-options": "nosniff",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "x-frame-options": "DENY"
+      }
+    },
+    "me": {
+      "status": 200,
+      "headers": {
+        "x-content-type-options": "nosniff",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "x-frame-options": "DENY"
+      }
+    },
+    "admin-denied": {
+      "status": 403,
+      "headers": {
+        "x-content-type-options": "nosniff",
+        "cache-control": "no-cache, no-store, max-age=0, must-revalidate",
+        "x-frame-options": "DENY"
+      }
+    },
+    "spa": {
+      "status": 200,
+      "headers": {}
+    }
+  },
+  "truststores": {
+    "root_sha256": "86a1ecba089c4a8d3bbe2734c612ba341d813e043cf9e8a862cd5c57a36bbe6b",
+    "truststores": {
+      "host-os": {
+        "contains_removed_root": false
+      },
+      "backend-old-os": {
+        "contains_removed_root": true
+      },
+      "frontend-old-os": {
+        "contains_removed_root": true
+      },
+      "backend-candidate-os": {
+        "contains_removed_root": false
+      },
+      "frontend-candidate-os": {
+        "contains_removed_root": false
+      },
+      "backend-old-java": {
+        "contains_removed_root": true
+      },
+      "backend-candidate-java": {
+        "contains_removed_root": false
+      }
+    }
+  },
+  "scans": {
+    "frontend-candidate-scan.json": {
+      "package_findings": 0,
+      "distinct_advisories": 0,
+      "os": {
+        "Family": "alpine",
+        "Name": "3.24.3"
+      },
+      "scope": "recognized packages in image or SBOM"
+    },
+    "backend-runtime-scan.json": {
+      "package_findings": 76,
+      "distinct_advisories": 76,
+      "os": {
+        "Family": "alpine",
+        "Name": "3.24.3"
+      },
+      "scope": "recognized OS and application packages; manually installed JRE verified separately"
+    },
+    "backend-complete-scan.json": {
+      "package_findings": 0,
+      "distinct_advisories": 0,
+      "os": {
+        "Family": "alpine",
+        "Name": "3.24.3"
+      },
+      "scope": "recognized OS and application packages; manually installed JRE verified separately"
+    },
+    "boot4-scan.json": {
+      "package_findings": 0,
+      "distinct_advisories": 0,
+      "os": null,
+      "scope": "recognized packages in image or SBOM"
+    },
+    "kassa-candidate-scan.json": {
+      "package_findings": 0,
+      "distinct_advisories": 0,
+      "os": null,
+      "scope": "recognized packages in image or SBOM"
+    }
+  },
+  "kernel_runtime": {
+    "kernel": "6.8.0-147-generic",
+    "config": [
+      "# CONFIG_GCOV_KERNEL is not set",
+      "CONFIG_XFRM=y",
+      "CONFIG_NET_HANDSHAKE=y",
+      "CONFIG_TIPC=m",
+      "CONFIG_NVME_TARGET=m"
+    ],
+    "loaded_relevant_modules": [
+      "tls",
+      "xfrm_user",
+      "xfrm_algo"
+    ],
+    "metapackage": "linux-image-virtual 6.8.0-147.147 install ok installed\nlinux-virtual 6.8.0-147.147 install ok installed\n"
+  },
+  "production_containers_unchanged": {
+    "coshift_backend": true,
+    "coshift_frontend": true
+  },
+  "kassa_service_active": true,
+  "remaining_test_containers": [],
+  "remaining_test_networks": []
+}

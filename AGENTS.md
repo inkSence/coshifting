@@ -12,11 +12,17 @@ Admins verwalten Personen und Schichten. Das Repository enthält Backend,
 Frontend, Docker-Konfiguration und Demo-Datenbankinitialisierung. Es ist vom
 separaten Projekt für die persönliche Website unabhängig.
 
+Produktiv läuft weiterhin der ältere JSON-Serverstand. Die
+[Sicherheitsveröffentlichung vom 22.10.2026](CoShift/doc/security/Deployment-2026-10-22.md)
+aktualisierte dessen Bibliotheken und Laufzeitimages; sie veröffentlichte die
+lokale PostgreSQL-/JPA-Migration nicht. Diese Ausgangsstände bei späteren
+Deployments getrennt behandeln.
+
 ## Orientierung und Architektur
 
 | Pfad | Zweck |
 | --- | --- |
-| `CoShift/pom.xml` | Backend: Java 21, Spring Boot 3.5.0, Spring Security, JPA, PostgreSQL und Gson. |
+| `CoShift/pom.xml` | Backend: Java 21, Spring Boot 4.1.2, Spring Security, JPA, PostgreSQL und Gson. |
 | `CoShift/mvnw` | Maven-Wrapper; konfiguriert für Maven 3.9.9. |
 | `CoShift/src/main/java/org/coshift/a_domain/` | Domänenobjekte für Schichten, Personen und Zeitkonten. |
 | `CoShift/src/main/java/org/coshift/b_application/` | Use Cases, Ports und `UseCaseInteractor` als Einstieg für Adapter. |
@@ -127,7 +133,9 @@ Passend zur Änderung prüfen und Ergebnisse einschließlich Einschränkungen ne
 - Einzelne Tests lassen sich gezielt ausführen, zum Beispiel
   `./mvnw -Dtest=ShiftTest,ConfigureShiftUseCaseTest,PersonJpaMapperTest test`.
   Neue Fachlogik möglichst ohne Spring-Kontext testen; HTTP-/Security-Verhalten
-  über geeignete MVC-Tests prüfen.
+  über geeignete MVC-Tests prüfen. Unter Boot 4 `MockitoBean` und
+  `org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest` verwenden;
+  die MVC-Tests benötigen `spring-boot-starter-webmvc-test`.
 - Frontend, aus `CoShift/frontend/`: `npm run lint` und `npm run build`.
   Der Build führt `tsc -b` und Vite aus. Es gibt derzeit kein npm-Testskript oder
   konfiguriertes Frontend-Testframework.
@@ -143,7 +151,11 @@ Passend zur Änderung prüfen und Ergebnisse einschließlich Einschränkungen ne
 Docker-Builds verwenden den Repository-Wurzelordner als Kontext. Der Backend-Build
 überspringt Tests mit `-DskipTests`; ein erfolgreiches Image ersetzt daher keinen
 Testlauf. Node wird nur beim Frontend-Build gebraucht; das fertige Image enthält
-Nginx und die erzeugten Dateien.
+Nginx und die erzeugten Dateien. Die Laufzeitbasis ist auf Nginx 1.30.6
+und einen geprüften Digest gepinnt. Das Backend verwendet Temurin 21.0.13+9
+(AMD64): Solange das offizielle Docker-Tag nachläuft, wird das offizielle
+JRE-Archiv mit festem SHA-256 im Dockerfile eingesetzt. Bei Updates Version,
+Downloadsumme und Basisdigest gemeinsam prüfen.
 
 Vor Start oder Änderung von Compose diese Besonderheiten berücksichtigen:
 

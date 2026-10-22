@@ -1,0 +1,62 @@
+--- a/CoShift/pom.xml
++++ b/CoShift/pom.xml
+@@ -5,7 +5,7 @@
+     <parent>
+         <groupId>org.springframework.boot</groupId>
+         <artifactId>spring-boot-starter-parent</artifactId>
+-        <version>3.5.0</version>
++        <version>4.1.2</version>
+         <relativePath/> <!-- lookup parent from repository -->
+     </parent>
+     <groupId>org.coshift</groupId>
+@@ -88,6 +88,11 @@
+     <version>2.11.0</version>
+ </dependency>
+ 
++<dependency>
++<groupId>org.springframework.boot</groupId>
++<artifactId>spring-boot-starter-webmvc-test</artifactId>
++<scope>test</scope>
++</dependency>
+ </dependencies>
+ 
+ <build>
+--- a/CoShift/src/test/java/org/coshift/c_adapters/ShiftControllerTest.java
++++ b/CoShift/src/test/java/org/coshift/c_adapters/ShiftControllerTest.java
+@@ -11,8 +11,8 @@
+ import org.coshift.d_frameworks.config.SpringConfig;
+ import org.junit.jupiter.api.Test;
+ import org.springframework.beans.factory.annotation.Autowired;
+-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+-import org.springframework.boot.test.mock.mockito.MockBean;
++import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
++import org.springframework.test.context.bean.override.mockito.MockitoBean;
+ import org.springframework.context.annotation.Import;
+ import org.springframework.test.web.servlet.MockMvc;
+ 
+@@ -33,12 +33,12 @@
+ 
+     @Autowired MockMvc mvc;
+ 
+-    @MockBean
++    @MockitoBean
+     UseCaseInteractor interactor;
+ 
+-    @MockBean PersonRepository  personRepo;  
++    @MockitoBean PersonRepository  personRepo;  
+ 
+-    @MockBean org.coshift.b_application.ports.TimeAccountRepository timeAccountRepo;
++    @MockitoBean org.coshift.b_application.ports.TimeAccountRepository timeAccountRepo;
+ 
+     @Test
+     void authenticatedRequestReturnsShifts() throws Exception {
+@@ -56,6 +56,8 @@
+     @Test
+     void unauthenticatedRequestIsRejected() throws Exception {
+         mvc.perform(get("/api/shifts"))
+-                .andExpect(status().isUnauthorized());
++                .andExpect(status().isUnauthorized())
++                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.header().string("X-Content-Type-Options", "nosniff"))
++                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.header().string("Cache-Control", "no-cache, no-store, max-age=0, must-revalidate"));
+     }
+ }
