@@ -11,8 +11,8 @@ import org.coshift.c_adapters.web.ShiftController;
 import org.coshift.d_frameworks.config.SpringConfig;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -33,12 +33,12 @@ class ShiftControllerTest {
 
     @Autowired MockMvc mvc;
 
-    @MockBean
+    @MockitoBean
     UseCaseInteractor interactor;
 
-    @MockBean PersonRepository  personRepo;  
+    @MockitoBean PersonRepository  personRepo;
 
-    @MockBean org.coshift.b_application.ports.TimeAccountRepository timeAccountRepo;
+    @MockitoBean org.coshift.b_application.ports.TimeAccountRepository timeAccountRepo;
 
     @Test
     void authenticatedRequestReturnsShifts() throws Exception {
@@ -56,6 +56,8 @@ class ShiftControllerTest {
     @Test
     void unauthenticatedRequestIsRejected() throws Exception {
         mvc.perform(get("/api/shifts"))
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isUnauthorized())
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.header().string("X-Content-Type-Options", "nosniff"))
+                .andExpect(org.springframework.test.web.servlet.result.MockMvcResultMatchers.header().string("Cache-Control", "no-cache, no-store, max-age=0, must-revalidate"));
     }
 }

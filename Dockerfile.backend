@@ -17,7 +17,13 @@ RUN mvn -q clean package -DskipTests
 ##############################################
 # 2. Lauf-Stage – nur das JRE + fertiges JAR #
 ##############################################
-FROM eclipse-temurin:21-jre-alpine
+FROM eclipse-temurin:21-jre-alpine@sha256:b48e02e0ea88d7bfb305335df94923bdef394905f4147dccd52e873cf17b1088
+
+# Das Docker-Tag enthält noch 21.0.12.1; die geprüfte offizielle JRE separat einsetzen.
+ADD --checksum=sha256:9138eab0f7d230e17163953f015ec9ae2431dbc49069c658b7f991e45b54fb9b https://github.com/adoptium/temurin21-binaries/releases/download/jdk-21.0.13%2B9/OpenJDK21U-jre_x64_alpine-linux_hotspot_21.0.13_9.tar.gz /tmp/security-jre.tar.gz
+RUN rm -rf /opt/java/openjdk && mkdir -p /opt/java/openjdk \
+    && tar xzf /tmp/security-jre.tar.gz -C /opt/java/openjdk --strip-components=1 \
+    && rm /tmp/security-jre.tar.gz
 
 WORKDIR /app
 ARG JAR_FILE=coshift-0.0.1-SNAPSHOT.jar

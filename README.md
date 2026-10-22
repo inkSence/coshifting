@@ -10,7 +10,7 @@ month.  Reduced staffing costs translate directly into lower product prices.
 ## Tech Stack
 
 Backend  
-• Java 21 • Spring Boot 3.5 • Spring Security • Maven • JUnit 5 • PostgreSQL
+• Java 21 • Spring Boot 4.1.2 • Spring Security • Maven • JUnit 6 • PostgreSQL
 
 Frontend  
 • React 19 • TypeScript 5 • Vite • ESLint
