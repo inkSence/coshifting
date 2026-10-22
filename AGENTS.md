@@ -112,8 +112,9 @@ npm run dev
 Vite verwendet normalerweise Port `5173`. `npm ci` nutzt die vorhandene Lockdatei;
 Abhängigkeitsupdates nur im Rahmen der jeweiligen Aufgabe durchführen. Bei
 Node-Änderungen eine unterstützte, gepatchte Version und die `engines` der
-Abhängigkeiten prüfen. Das vorhandene `node:20-alpine` im Frontend-Dockerfile ist
-ein analysierter Altstand, keine Empfehlung für neue Builds.
+Abhängigkeiten prüfen. `CoShift/frontend/.nvmrc` und die Buildstufe im
+Frontend-Dockerfile verwenden Node 22.23.4; bei Updates beide Stellen sowie die
+Versionsangabe in `README.md` gemeinsam pflegen.
 
 ## Prüfungen
 
